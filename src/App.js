@@ -25,7 +25,7 @@ export default class App extends Component{
       newText.action === this.state.newTodo
     )){
       this.setState({
-                    todoITems: [...this.state.todoItems, {action:this.state.newTodo, done:false}],
+                    todoItems: [...this.state.todoItems, {action:this.state.newTodo, done:false}],
                     newTodo: ""
                   }
         )
@@ -42,13 +42,22 @@ export default class App extends Component{
     return(
         <div>
           <h1 className='bg-primary text-white text-center'>
-            {`Powered By ${this.state.userName}`}
+            {`Powered By ${this.state.userName}(${this.state.todoItems.filter(eachTodo => !eachTodo.done).length} items to complete)`}
           </h1>
           <button className="btn btn-primary m-2"
           onClick={ this.changeStateData }
           >
             Change Data
           </button>
+
+          <div className="container-fluid">
+          <div className="my-2">
+          <input className="form-control"
+           value= {this.state.newTodo}
+           onChange={this.updateNewTodo} />
+          <button className="btn btn-primary mt-1" onClick={this.updateTodoItems}>Add</button>
+          </div>
+          </div>
         </div>
     )
   }
