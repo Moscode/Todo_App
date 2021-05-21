@@ -32,6 +32,11 @@ export default class App extends Component{
     }
   }
 
+  //Creating the toggle for completed or not.
+
+  isCompleted = () =>{
+    this.setState({todoItems: this.state.todoItems.map(item => item.action === )})
+  }
   changeStateData = () =>{
     this.setState({
       userName: this.state.userName === "Firebase" ? "Google Cloud":"Firebase"
