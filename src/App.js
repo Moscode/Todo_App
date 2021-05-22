@@ -33,9 +33,24 @@ export default class App extends Component{
   }
 
   //Creating the toggle for completed or not.
+  isCompleted = (todo) =>{
+    this.setState({todoItems: this.state.todoItems.map(
+      item => item.action === todo.action ? {...item, done: !item.done} : item)
+    })
+  }
 
-  isCompleted = () =>{
-    this.setState({todoItems: this.state.todoItems.map(item => item.action === )})
+  //Table row displaying the data
+  tableRowData = () => {
+    this.state.todoItems.map(item => 
+      <tr key={ item.action }>
+        <td>{item.action}</td>
+        <td>
+          <input type="checkbox" checked={ item.done } 
+          onClick = {this.isCompleted(item)} />
+        </td>
+      </tr>
+
+      )
   }
   changeStateData = () =>{
     this.setState({
@@ -62,6 +77,14 @@ export default class App extends Component{
            onChange={this.updateNewTodo} />
           <button className="btn btn-primary mt-1" onClick={this.updateTodoItems}>Add</button>
           </div>
+          <table className="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th>Description</th><th>Done</th>
+              </tr>
+              <tbody>{this.tableRowData()}</tbody>
+            </thead>
+          </table>
           </div>
         </div>
     )
