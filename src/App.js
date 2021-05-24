@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-
+import { TodoBanner } from "./TodoBanner";
+import { TodoCreator } from "./TodoCreator";
+import { TodoRow } from "./TodoRow";
 export default class App extends Component{
   constructor(props){
     super(props);
@@ -10,7 +12,7 @@ export default class App extends Component{
                         {action: "Study Nodejs", done: false},
                         {action: "Study Shell Scripting", done: false}
            ],
-           newTodo: ""
+           //newTodo: ""
     }
   }
 
