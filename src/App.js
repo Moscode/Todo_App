@@ -22,37 +22,36 @@ export default class App extends Component{
   }
 
 //Adding the newTodo content to the todoItems
-  updateTodoItems = () => {
+  updateTodoItems = (task) => {
     if(!this.state.todoItems.find(newText => 
-      newText.action === this.state.newTodo
+      newText.action === task
     )){
       this.setState({
-                    todoItems: [...this.state.todoItems, {action:this.state.newTodo, done:false}],
-                    newTodo: ""
+                    todoItems: [...this.state.todoItems, {action:task, done:false}]
                   }
         )
     }
   }
 
   //Creating the toggle for completed or not.
-  isCompleted = (todo) =>{
+  isCompleted = (todo) =>
     this.setState({todoItems: this.state.todoItems.map(
       item => item.action === todo.action ? {...item, done: !item.done} : item)
-    })}
+    })
 
   //Table row displaying the data
   tableRowData = () => 
     this.state.todoItems.map(item => 
-      <tr key={item.action}>
-        <td>{item.action}</td>
+      <TodoRow key={ item.action } item={ item } callback ={ this.isCompleted } /> )
+       /* <td>{item.action}</td>
         <td>
           <input type="checkbox" checked={ item.done } 
               onChange = {() => this.isCompleted(item)} />
         </td>
-      </tr>)
+      </tr>) */
 
   render = () =>
-        <div>
+        /*<div>
           <h1 className='bg-primary text-white text-center'>
             {`Powered By ${this.state.userName}(${this.state.todoItems.filter(eachTodo => !eachTodo.done).length} items to complete)`}
           </h1>
@@ -63,7 +62,11 @@ export default class App extends Component{
            value= {this.state.newTodo}
            onChange={this.updateNewTodo} />
           <button className="btn btn-primary mt-1" onClick={this.updateTodoItems}>Add</button>
-          </div>
+          </div> */
+          <div>
+          <TodoBanner name={ this.state.userName } tasks={ this.state.todoItems} />
+          <div className = "container-fluid">
+          <TodoCreator callback = {this.createNewTodo} />
           <table className="table table-striped table-bordered">
             <thead>
               <tr>
