@@ -28,11 +28,13 @@ export default class App extends Component{
     if(!this.state.todoItems.find(newText => 
       newText.action === task
     )){
-      this.setState({
+      this.setState(
+                  {
                     todoItems: [...this.state.todoItems, {action:task, done:false}]
-                  }
+                  },
+                  () => localStorage.setItem("todos",JSON.stringify(this.state))
         )
-    }
+      }
   }
 
   //Creating the toggle for completed or not.
@@ -51,6 +53,21 @@ export default class App extends Component{
               onChange = {() => this.isCompleted(item)} />
         </td>
       </tr>) */
+  componentDidMount =()=> {
+    let data = localStorage.getItem('todos');
+    this.setState(data != null 
+      ? JSON.parse(data)
+      : 
+      {
+      userName: "Firebase",
+      todoItems: [{action: "Study Maths", done: false},
+                  {action: "Study Physics", done: false},
+                  {action: "Study Nodejs", done: false},
+                  {action: "Study Shell Scripting", done: false}
+      ],
+      showCompleted: true
+      })
+}
 
   render = () =>
         /*<div>
@@ -87,7 +104,7 @@ export default class App extends Component{
           this.state.showCompleted && 
            <table className="table table-striped table-bordered">
              <thead>
-               <tr><th>Description</th><th>DOne</th></tr>
+               <tr><th>Description</th><th>Done</th></tr>
              </thead>
              <tbody>{this.tableRowData(true)}</tbody>
            </table>

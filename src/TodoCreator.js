@@ -1,6 +1,6 @@
-import React from "react";
+import React, {Component} from "react";
 
-export class TodoCreator extends React{
+export class TodoCreator extends Component{
     constructor(props){
         super(props);
         this.state = { newTodo: "" } 
@@ -13,7 +13,7 @@ export class TodoCreator extends React{
 
     //
     createNewTodo = () => {
-        this.props.callback(this.state.newTodo);
+        //this.props.callback(this.state.newTodo);
         this.setState({newTodo: ""});
     }
 
