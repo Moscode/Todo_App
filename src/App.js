@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { TodoBanner } from "./TodoBanner";
 import { TodoCreator } from "./TodoCreator";
 import { TodoRow } from "./TodoRow";
-import {Visibility } from "./VisibilityControl"
+import { VisibilityControl } from "./VisibilityControl";
+
 export default class App extends Component{
   constructor(props){
     super(props);
@@ -13,7 +14,7 @@ export default class App extends Component{
                         {action: "Study Nodejs", done: false},
                         {action: "Study Shell Scripting", done: false}
            ],
-           //newTodo: ""
+           showCompleted: true
     }
   }
 
@@ -41,8 +42,8 @@ export default class App extends Component{
     })
 
   //Table row displaying the data
-  tableRowData = () => 
-    this.state.todoItems.map(item => 
+  tableRowData = (doneValue) => 
+    this.state.todoItems.filter(item => item.done === doneValue).map(item =>
       <TodoRow key={ item.action } item={ item } callback ={ this.isCompleted } /> )
        /* <td>{item.action}</td>
         <td>
@@ -74,8 +75,23 @@ export default class App extends Component{
                 <th>Description</th><th>Done</th>
               </tr>
             </thead>
-            <tbody>{ this.tableRowData() }</tbody>
+            <tbody>{ this.tableRowData(false) }</tbody>
           </table>
+          <div className="bg-secondary text-white text-center p-2">
+            <VisibilityControl description="Completed Tasks"
+             isChecked={this.state.showCompleted}
+             callback={(checked)=>this.setState({showCompleted: checked})} />
+          </div>
+
+          {
+          this.state.showCompleted && 
+           <table className="table table-striped table-bordered">
+             <thead>
+               <tr><th>Description</th><th>DOne</th></tr>
+             </thead>
+             <tbody>{this.tableRowData(true)}</tbody>
+           </table>
+           }
           </div>
         </div>
 }
